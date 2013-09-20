@@ -1,0 +1,75 @@
+/*  Bookmarks ................................................... */
+
+ul#bookmarks {
+    position: relative; float: left;
+    border-left: 1px solid #404040;
+    border-right: 1px solid #404040;
+}
+ul#bookmarks li {
+    padding: 8px 10px;
+}
+ul#bookmarks li:last-child {
+    border-right: 1px solid #262626;
+}
+
+ul#bookmarks li#toggle-bookmarks-listing {
+    width: 125px;
+    cursor: pointer;
+    border-left: 1px solid #404040;
+    border-right: 1px solid #262626;
+}
+ul#bookmarks li#toggle-bookmarks-listing:hover>a {
+    color: #eee;
+}
+ul#bookmarks li.action {
+    padding: 3px 0 2px;
+}
+ul#bookmarks li.action:last-child {
+    padding-right: 5px;
+}
+
+/*  Bookmarks Listing ................................................... */
+
+ul#bookmarks-listing {
+    display: none;
+    position: absolute; z-index: 1000; top: 30px; left: -1px; float: none;
+    margin: 0;
+    width: 145px;
+    border: 1px solid #404040;
+    -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px;
+    background: #333;
+    -moz-box-shadow: 0 0 10px #333; -webkit-box-shadow: 0 0 10px #333;
+}
+ul#bookmarks-listing li {
+    float: left;
+    padding: 0;
+    border-bottom: 1px solid #4d4d4d;
+}
+ul#bookmarks-listing li:last-child {
+    border: none;
+}
+
+ul#bookmarks li p {
+    padding: 5px 10px;
+}
+
+ul#bookmarks-listing li a:link, ul#bookmarks-listing li a:visited {
+    display: block;
+    padding: 5px 30px 5px 10px;
+    background: #333;
+    width: 105px;
+}
+
+li#toggle-bookmarks-listing:hover ul#bookmarks-listing {
+    display: block;
+}
+
+ul#bookmarks-listing li a:hover, ul#bookmarks-listing li a:active {
+    color: #eee;
+    background: #309bbf;
+}
+ul#bookmarks-listing li:last-child a {
+    -moz-border-radius-bottomleft: 3px; -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px; -webkit-border-bottom-right-radius: 3px;
+}

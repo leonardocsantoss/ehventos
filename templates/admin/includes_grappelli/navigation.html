@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<ul id="bookmarks">
+
+{% if object_list %}
+	{% for object in object_list %}
+		{% ifchanged object.navigation %}
+			{% if not forloop.first %}
+				</ul>
+					</li>
+			{% endif %}
+			<li id="toggle-bookmarks-listing" class="enabled"><a href="javascript://">{{ object.navigation }}</a>
+			<ul id="bookmarks-listing">
+		{% endifchanged %}
+		<li><a href="{{ object.link }}"><strong>{{ object }}</strong></a></li>
+	{% endfor %}
+
+{% endif %}
+
+</ul>

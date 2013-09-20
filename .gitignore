@@ -1,0 +1,12 @@
+*.pyc
+*.sqlite
+*.DS_Store
+public/media/slides
+public/media/produtos
+public/media/cache
+cache
+slides
+videos
+nbproject
+settings/local.py
+settings/development.py

@@ -1,0 +1,48 @@
+{% load i18n grp_tags %}
+
+<div id="header">
+    <div class="branding">&nbsp;</div>
+    <!-- Title -->
+    <div class="admin-title">{% get_admin_title %}</div>
+    {% if user.is_authenticated and user.is_staff %}
+    	<!-- Bookmarks (temporary) -->
+	    <ul id="bookmarks">
+	        <li id="toggle-bookmarks-listing" class="enabled"><a href="javascript://">{% trans "Navigation" %}</a></li>
+	    </ul>
+            <ul><li style="margin: 8px;"><a href="/">Veja no site</a></li></ul>
+        <ul id="user-tools">
+            <li>
+                {% firstof user.first_name user.username %}, {% trans 'seja bem vindo!' %} |
+                    <!-- Change Password -->
+                    {% url admin:password_change as password_change_url %}
+                    {% if password_change_url %}
+                        <a href="{{ password_change_url }}">
+                    {% else %}
+                        <a href="{{ root_path }}password_change/">
+                    {% endif %}
+                    {% trans 'Change password' %}</a> |
+                    <!-- Logout -->
+                    {% url admin:logout as logout_url %}
+                    {% if logout_url %}
+                        <a href="{{ logout_url }}">
+                    {% else %}
+                        <a href="{{ root_path }}logout/">
+                    {% endif %}
+                    {% trans 'Sair' %}</a>
+            </li>
+            <!-- Userlinks -->
+            {% block userlinks %}
+                <!-- JS tests -->
+                {% url test-index as testindexurl %}
+                {% if testindexurl %}
+                    <li><a href="{{ testindexurl }}">{% trans 'Tests' %}</a></li>
+                {% endif %}
+                <!-- Documentation -->
+                {% url django-admindocs-docroot as docsroot %}
+                {% if docsroot %}
+                    <li><a href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
+                {% endif %}
+            {% endblock %}
+        </ul>
+    {% endif %}
+</div>

@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% load comments account fb_versions %}
+
+{% block extra_head %}
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAd7Q5mN9809jSpiJV3vlNqBQO3kU2fVtsM_YKb6Sepb25TCvIEBQEHRP9vAfLlD6LaViG00sfVoEDmw" type="text/javascript"></script>
+{% endblock %}
+
+{% block head_title %}{{ evento.nome }}{% endblock %}
+
+{% block content %}
+
+<div class="item_preview">
+
+    <div id="slideshow">
+        {% version_object evento.logomarca.path 'banner_interno' as banner %}
+        <img src="{{ banner }}" alt="{{ evento.nome }}" width="{{ banner.width }}" height="{{ banner.height }}" />
+    </div>
+
+</div>
+
+<div class="item_description">
+    <h4>Descrição</h4>
+    <br/>
+    <p>{{ evento.descricao }}</p>
+
+    <div class="shadow_large"></div>
+    
+    <h4>Apresentações</h4>
+    <br/>
+    {% for apr in apresentacoes %}
+    <ul class="comment_list">
+        <li class="comment_reg">
+            <div class="com_txt">
+                <div class="com_name" style="text-decoration: underline">{{ apr.titulo }}</div>
+
+                {% for datahora in apr.datahora_set.all %}
+                <div class="com_date">{{ datahora.data_hora|date:"d b Y, H\hi" }}</div>
+                {% endfor %}
+                <div class="com_content">
+                    <br/>
+                    <b>Tipo de evento:</b> {{ apr.get_tipo_display }}
+                    <br/>
+                    <b>Descrição:</b> {{ apr.descricao }}<br/>
+                </div>
+                <br/>
+
+                <div class="com_name" style="text-decoration: underline">Local</div>
+                <div class="com_content">
+                    <br/>
+                    <div class="map" id="map_{{ apr.id }}"></div>
+                    <script type="text/javascript">
+                        (function($) {
+                            $(document).unload(function(){
+                                GUnload();
+                            });
+                        })(jQuery);
+                        (function($) {
+                            $(document).ready(function() {
+                                if (GBrowserIsCompatible()) {
+                                    var map = new GMap2(document.getElementById("map_{{ apr.id }}"));
+                                    map.setCenter(new GLatLng(0,0),1);
+                                    map.setMapType(G_NORMAL_MAP);
+                                    map.setUIToDefault();
+
+                                    geocoder = new GClientGeocoder();
+
+                                    point = new GPoint (0,0);
+                                    marker = new GMarker(point);
+                                    map.addOverlay(marker); 
+
+                                    spl = "{{ apr.local }}".split(' | (')[1];
+                                    spl1 = spl.split(')')[0];
+                                    x = spl1.split(',')[0];
+                                    y = spl1.split(',')[1];
+                                    point = new GLatLng(x, y);
+                                    map.setCenter(point, 13);
+                                    marker.setPoint(point);
+                                    marker.openInfoWindowHtml("{{ apr.local }}".split(' | ')[0]);
+
+                                  }
+                            });
+                        })(jQuery);
+                    </script>
+                    
+                    
+                </div>
+                <br/>
+
+                <div class="com_name" style="text-decoration: underline" >Apresentadores</div>
+                    <br/><br/>
+                <ul class="comment_list" style="margin-left: 30px; background: #f9f9f9;">
+                    
+                    {% for apresentador in apr.apresentadores.all %}
+                        <li class="comment_reg">
+                            <div class="com_img"><a href="{{ apresentador.link }}" target="_blank"><img src="{% gravatar_url apresentador.email %}" alt="{{ apresentador.nome }}" width="80" height="80" alt="foto" /></a></div>
+                            <div class="com_txt">
+                                <div class="com_name"><a href="{{ apresentador.link }}" target="_blank">{{ apresentador.nome }}</a></div>
+                                <div class="com_content">
+                                    <p><b>Email:</b> {{ apresentador.email }}<br/>
+                                    {{ apresentador.descricao }}</p>
+                                </div>
+                            </div>
+                        </li>
+                     {% endfor %}
+                </ul>
+                
+            </div>
+        </li>
+
+    </ul>
+    <br/><br/>
+    {% endfor %}
+</div>
+
+
+<div class="shadow_large"></div>
+
+<div class="comments">
+    <h3>Comentários</h3>
+
+    <ul class="comment_list">
+
+        {% get_comment_list for evento as comentarios %}
+        
+        {% for comentario in comentarios %}
+        <li class="comment_reg">
+            <div class="com_img">{% if comentario.url %}<a href="{{ comentario.url }}" target="_blank">{% endif %}<img src="{% gravatar_url comentario.user.email %}" width="80" height="80" alt="{{ comentario.user }}" />{% if comentario.url %}</a>{% endif %}</div>
+            <div class="com_txt">
+                <div class="com_name">{% if comentario.url %}<a href="{{ comentario.url }}" target="_blank">{% endif %}{{ comentario.name }}{% if comentario.url %}</a>{% endif %}</div>
+
+                <div class="com_date">{{ comentario.submit_date }}</div>
+                <div class="com_content">
+                    {{ comentario.comment|linebreaks }}<br>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+
+
+    </ul>
+</div> <!--end of comments-->
+
+    {% if user.is_authenticated %}
+    <div class="leave_comment">
+        <h3>Deixe um comentário:</h3>
+
+        {% get_comment_form for evento as form %}
+
+
+        <form id="comment_form" action="{% comment_form_target %}" method="post"  >{% csrf_token %}
+            <fieldset>
+            <input type="hidden" name="next" value="{{ evento.get_absolute_url }}" />
+            {% for field in form %}
+                {% if field.is_hidden %}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
+            <div class="row">
+                <div class="comm_photo">
+                </div>
+
+                <textarea name="comment" onkeydown="if($(this).val() != ''){$('#submit_coment').attr('style', 'margin-right: 0px;display: block;');}else{$('#submit_coment').attr('style', 'display: none;');}" cols="30" style="width:500px;resize:vertical;" rows="6"></textarea><img class="speech_bubble" src="images/speech_bubble.png" />
+            </div> <!--end of row-->
+
+            <div class="form_blick">
+                <input type="submit" style="margin-right: 0px; display: none;" class="submit" id="submit_coment" value="Enviar comentário" />
+            </div>
+            </fieldset>
+            
+        </form>
+
+    </div> <!--end of leave_comment-->
+    {% endif %}
+    
+{% endblock %}
+
+
+{% block right %}
+    {% if evento.aberta %}<div class="btn_free"><a href="inscricao">Inscreva-se já!</a></div>{% endif %}
+    
+    {% if realizacao %}
+        <br/>
+        <h4>Realização</h4>
+        {% for realiz in realizacao %}
+            {% version_object realiz.logomarca.path 'realizacao_apoio' as banner_realiz %}
+            <div id="banner" align="center">
+                <a href="{{ realiz.link }}" target="_blank"><img src="{{ banner_realiz }}" alt="{{ realiz.nome }}" width="{{ banner_realiz.width }}" height="{{ banner_realiz.height }}"></a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="shadow_small"></div>
+    
+    {% if apoio %}
+        <br/>
+        <h4>Apoio</h4>
+        {% for ap in apoio %}
+            {% version_object ap.logomarca.path 'realizacao_apoio' as banner_ap %}
+            <div id="banner" align="center">
+                <a href="{{ ap.link }}" target="_blank"><img src="{{ banner_ap }}" alt="{{ ap.nome }}" width="{{ banner_ap.width }}" height="{{ banner_ap.height }}"></a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="shadow_small"></div>
+
+{% endblock %}

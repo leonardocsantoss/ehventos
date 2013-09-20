@@ -1,0 +1,18 @@
+{% load uni_form_field %}
+	{% if field.is_hidden %}
+        {{ field }}
+    {% else %}
+        <div id="div_{{ field.auto_id }}" class="field{% if field.errors %} error{% endif %}{% if field|is_checkbox %} checkbox{% endif %}">
+            
+            {% if field.label %}
+                    <label class="{% if field.field.required %} required{% endif %}">
+                        {{ field.label }}
+                    </label>
+            {% endif %}
+            {{ field|with_class }}
+            {% for error in field.errors %}
+            <p class="errorlist">{{ error }}</p>
+            {% endfor %}
+        </div>
+	{% endif %}
+  

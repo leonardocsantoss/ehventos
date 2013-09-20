@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head_title %}Confirmação de email{% endblock %}
+
+{% block content %}
+    <div class="item_description">
+    {% if email_address %}
+            <h4>Email confirmado com sucesso.</h4>
+            <br/>
+            <p>Seja bem vindo ao ehVentos!<br/>Agora você pode usar todos os serviços que o ehVentos disponibiliza para você!</p>
+
+    {% else %}
+        <h4>Chave de confirmação inválida.</h4>
+    {% endif %}
+    </div>
+{% endblock %}

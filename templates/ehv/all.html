@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load fb_versions %}
+
+{% block content_class %}main_item_box2{% endblock %}
+
+{% block head_title %}Todos os eventos{% endblock %}
+
+{% block content %}
+    {% for evento in eventos %}
+        <div id="banner_all">
+           {% version_object evento.logomarca.path 'realizacao_apoio' as banner_ehv %}
+           <a href="{{ evento.get_absolute_url }}"><img src="{{ banner_ehv }}" alt="{{ evento.nome }}" width="{{ banner_ehv.width }}" height="{{ banner_ehv.height }}"></a>
+           <div align="center">
+                <h4>{{ evento.nome }}</h4>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

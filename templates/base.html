@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    {% load i18n %}
+    <head>
+
+        <title>ehVentos</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta name="description" content="Sistema gratuito de gerenciamento de eventos gratuitos" />
+        <meta name="keywords" content="ehVentos, eventos, gestão" />
+        <meta name="author" content="Leonardo da Costa Santos" />
+
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}front/css/style.css" />
+
+        <script type="text/javascript" src="{{ MEDIA_URL }}front/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}front/js/jquery.cycle.all.min.js"></script>
+        <script type='text/javascript' src='{{ MEDIA_URL }}admin/js/jquery.maskedinput-1.2.2.min.js'></script>
+
+        <script type="text/javascript" src="{{ MEDIA_URL }}front/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}front/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+        
+        {% block extra_head_base %}
+            {% block extra_head %}{% endblock %}
+        {% endblock %}
+
+    </head>
+    <body>
+        
+        <div id="header">
+            
+            <div class="head_top">
+                <div class="head_top_inside">
+                    <div class="head_login_form">
+                        {% if not user.is_authenticated %}
+                            <!-- login -->
+                            <form method="post" action="{% url acct_login %}">{% csrf_token %}
+                                <fieldset>
+                                    <input type="text" name="username" class="input_txt" value="email@email.com" onblur="if (jQuery(this).val() == &quot;&quot;) { jQuery(this).val(&quot;email@email.com&quot;); }" onclick="jQuery(this).val(&quot;&quot;);" />
+
+                                    <input type="password" name="password" class="input_txt" value="senha" onblur="if (jQuery(this).val() == &quot;&quot;) { jQuery(this).val(&quot;senha&quot;); }" onclick="jQuery(this).val(&quot;&quot;);" />
+                                    <input type="submit" value="Entrar" class="input_submit" />
+                                    <a href="{% url acct_signup %}" class="sign_up">Registrar-se</a>
+                                </fieldset>
+                            </form>
+                        {% else %}
+                            {% firstof user.first_name user.username %}, {% trans 'seja bem vindo!' %} | <a href="{% url acct_passwd %}" class="sign_up" >Alterar senha</a> | <a href="{% url acct_logout %}" class="sign_up" >Sair</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div><!--end of head_top-->
+
+            <div class="head">
+
+                <div class="head_inside">
+                    
+                    <div class="logo"><a href="/"><img src="{{ MEDIA_URL }}front/images/logo.png" width="280" height="70" alt="ehVentos"/></a></div>
+                    
+                    <div class="navi">
+                        <ul>
+                            <li><a href="#contato">Contato</a></li>
+                            {% if user.is_staff %}<li><a href="/admin/" >Gerencie seus eventos</a></li>{% endif %}
+                            <li><a href="{% url ehv_all %}">Todos os eventos</a></li>
+                            <li style="border-left: 0;" ><a href="/">Home</a></li>
+                            {% block menu %}{% endblock %}
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--end of head-->
+            
+        </div>
+
+            <div class="banner_tour">
+
+            <div class="banner_tour_inner">
+                <div class="banner_inside" >
+                    {% block banner_content %}
+                    {% endblock %}
+                </div> <!--end of banner-->
+
+
+                <div id="content" class="tour_content">
+                    {% block banner_index %}
+                    {% endblock %}
+
+
+
+                        <div class="content_inside">
+
+                            <div class="main_content">
+
+                            <div class="browse_header">
+                                <div class="item_title">
+                                    <h1>{% block head_title %}{% endblock %}</h1>
+                                </div>
+
+                            </div>
+                            
+                            <div class="{% block content_class %}main_item_box{% endblock %}">
+                                {% block messages %}
+                                    {% if messages %}
+                                        <div id="messages">
+                                            {% for message in messages %}
+                                            <span class="message" id="message_{{ forloop.counter }}"> {{ message }}<a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "X" %}</small></a></span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% endblock %}
+                                <div class="item_description" style="padding-left: 10px;">
+
+                                    {% block content %}{% endblock %}
+                                </div>
+                            </div>
+                            <div class="item_sidebar">{% block right %}{% endblock %}</div>
+                                
+                        </div> <!--end of resource_info_box (item info sidebar) -->
+                    </div>
+                </div> <!--end of main_content-->
+            </div>
+        </div> <!-- end content -->
+
+
+
+        <div class="steps">
+            <div class="steps_inside">
+                <ol>
+
+                    <li class="step1 float"><a href="{% url acct_signup %}">Cadastre-se</a></li>
+                    <li class="step2 float"><a href="/admin/ehv/evento/">Crie os seu eventos</a></li>
+
+                    <li class="step3 float"><a href="/">Divulgue com seu amigos</a></li>
+                </ol>
+            </div>
+        </div>
+
+
+        <div id="footer">
+            <div class="footer_inside">
+                <div class="foot_about">
+
+                    <h5>O que o EhV?</h5>
+                    <p>O EhV é um software gratuito de gestão de eventos gratuitos.
+                    <br/><br/>Ele proporciona em uma interface simples, todas as funcionalidades necessárias para a gestão do seu evento.</p>
+                </div> <!--end of foot_about-->
+
+                <div class="foot_nav">
+                    <h5>Passo-a-passo para criar o seu evento</h5>
+
+                    <ul>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/evento/">1º - Eventos</a>
+                        </li>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/realizacao/">2º - Realizações</a>
+                        </li>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/apoio/">3º - Apoios</a>
+                        </li>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/apresentador/">4º - Apresentadores</a>
+                        </li>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/apresentacao/">5º - Apresentações</a>
+                        </li>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/tipoinscricao/">6º - Tipos inscrições</a>
+                        </li>
+                        <li class="has_sub">
+                            <a href="/admin/ehv/certificado/">7º - Certificados</a>
+                        </li>
+
+                    </ul>
+                    <ul>
+
+                        <li class="has_sub">
+                            <a href="">Extras</a>
+                            <ul>
+                                <li><a href="/admin/ehv/inscricao/">Incrições</a></li>
+                                <li><a href="/admin/ehv/fonte/">Fontes</a></li>
+                            </ul>
+                        </li>
+                        
+
+                    </ul>
+
+                   
+                </div> <!--end of foot_nav-->
+
+
+                <div class="foot_newsletter">
+
+                    <div id="adpacks">
+
+                        <h5>Desenvolvedores</h5><a name="contato"></a>
+                        <p>
+                            <b><a href="http://lattes.cnpq.br/6512476353522377" style="color: #FFF">Leonardo da Costa Santos</a></b>
+                            <br/>
+                            <b><a href="http://lattes.cnpq.br/3563291777221100" style="color: #FFF">Héldon José Oliveira Albuquerque</a></b>
+                    </div> <!--end of foot_newsletter-->
+                </div>
+            </div> <!--end of footer-->
+
+    </body>
+
+</html>
+    

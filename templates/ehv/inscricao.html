@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% load comments fb_versions uni_form ehv_tags %}
+
+
+{% block head_title %}<a href="{{ evento.get_absolute_url }}" style="text-decoration: none">{{ evento.nome }}</a> > {% if not tipo_inscricao %}Inscrição{% else %}<a href="?tipo_inscricao" style="text-decoration: none">Inscrição</a> > {{ tipo_inscricao.nome }} {% endif %} {% endblock %}
+
+{% block content %}
+
+{% if not tipo_inscricao %}
+        <ul class="comment_list">
+            <li class="comment_reg">
+                <div class="com_txt">
+                    <div class="com_name" style="text-decoration: underline">Tipos de inscrições</div>
+                    <br/><br/>
+                    <ul class="comment_list" style="margin-left: 30px; background: #f9f9f9;">
+
+                        {% for tipo in tipos_inscricao %}
+                            <li class="comment_reg">
+                                <div class="com_txt">
+                                    <div class="com_name">{{ tipo.nome }}</div>
+                                    
+                                    <div class="com_content">
+                                        <br/>
+                                        <p>
+                                            <b>Vagas abertas:</b> {{ tipo.vagas_abertas }}<br/>
+                                            <b>Data início das inscrições:</b> {{ tipo.data_inicio_inscricao }}<br/>
+                                            <b>Data fim das inscrições:</b> {{ tipo.data_fim_inscricao }}<br/>
+                                            <b>Apresentações:</b><br/>
+                                            {% for apr in tipo.apresentacoes.all %}
+                                                {{ apr.titulo }}<br/>
+                                            {% endfor %}
+                                        </p>
+                                        <div class="btn_free_min{% if not tipo.aberta %} disable{% endif %}">{% if not tipo.aberta %}Inscrições encerradas!{% else %}{% get_url_inscricao tipo user %}{% endif %}</div>
+                                    </div>
+                                </div>
+                            </li>
+                         {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        </ul>
+{% else %}
+    <div class="item_description" >
+        <h4>{{ tipo_inscricao.nome }}</h4>
+        <br/>
+        <form action="" method="POST">{% csrf_token %}
+            <fieldset>
+                {{ form|as_uni_form }}
+                <input type="hidden" name="tipo_inscricao" value="{{ tipo_inscricao.id }}">
+                <div class="form_blick">
+                    <input type="submit" style="margin-right: 100px" class="submit" value="Inscrever-se" />
+                </div>
+            </fieldset>
+        </form>
+        <div class="shadow_large"></div>
+    </div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block right %}
+    
+    {% if realizacao %}
+        <br/>
+        <h4>Realização</h4>
+        {% for realiz in realizacao %}
+            {% version_object realiz.logomarca.path 'realizacao_apoio' as banner_realiz %}
+            <div id="banner" align="center">
+                <a href="{{ realiz.link }}" target="_blank"><img src="{{ banner_realiz }}" alt="{{ realiz.nome }}" width="{{ banner_realiz.width }}" height="{{ banner_realiz.height }}"></a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="shadow_small"></div>
+    
+    {% if apoio %}
+        <br/>
+        <h4>Apoio</h4>
+        {% for ap in apoio %}
+            {% version_object ap.logomarca.path 'realizacao_apoio' as banner_ap %}
+            <div id="banner" align="center">
+                <a href="{{ ap.link }}" target="_blank"><img src="{{ banner_ap }}" alt="{{ ap.nome }}" width="{{ banner_ap.width }}" height="{{ banner_ap.height }}"></a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="shadow_small"></div>
+
+{% endblock %}

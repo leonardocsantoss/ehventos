@@ -1,0 +1,25 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load uni_form %}
+
+{% block head_title %}{% trans "Entrar" %}{% endblock %}
+
+{% block content %}
+        {% url acct_signup as signup_url %}
+        <p>{% blocktrans %}Você não está cadastrado? <a href="{{ signup_url }}">Cadastre-se</a>!{% endblocktrans %}</p>
+        <div class="main_form">
+            <form class="login uniForm" method="POST" action="{% url acct_login %}">{% csrf_token %}
+                <fieldset class="inlineLabels">
+                    <div class="form_block">
+                        <a href="{% url acct_passwd_reset %}">{% trans "Esqueceu a Senha?" %}</a>
+                    </div>
+                    {{ form|as_uni_form }}
+                    <div class="form_blick">
+                        <input type="submit" class="submit" value="{% trans "Entrar" %}" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    
+{% endblock %}

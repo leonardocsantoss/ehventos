@@ -1,0 +1,20 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Linguagem" %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Linguagem" %}</h1>
+    
+    <p>{% trans "Qual a sua linguagem de preferência?" %}</p>
+    
+    <form method="POST" action="" class="uniForm">
+        <fieldset class="inlineLabels">
+            {{ form }}
+             <div class = "form_block">
+                 <input type="submit" value="{% trans "Alterar minha linguagem" %}" />
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

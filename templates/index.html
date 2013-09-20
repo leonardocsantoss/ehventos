@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load fb_versions %}
+
+
+{% block extra_head %}
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery('#eventos').cycle({
+            fx:    'scrollRight',
+            delay: 5000,
+            prev:    '.arrow_left',
+            next:    '.arrow_right'
+        });
+    });
+</script>
+{% endblock %}
+
+{% block banner_content %}
+    <div class="steps_inside banner_links">
+            <ol>
+
+                <li class="step1"><a href="{% url acct_signup %}">Cadastre-se</a></li>
+                <li class="step2"><a href="/admin/ehv/evento/">Crie os seu eventos</a></li>
+
+                <li class="step3"><a href="/">Divulgue com seu amigos</a></li>
+            </ol>
+        </div>
+{% endblock %}
+
+{% block banner_index %}
+<div id="banner_index">
+</div>
+{% endblock %}
+
+{% block content_class %}main_item_box2{% endblock %}
+
+{% block head_title %}Novos eventos{% endblock %}
+
+{% block content %}
+
+<div id="eventos" style="margin-left: 20px;">
+        {% for evento in eventos %}
+            <div class="item_preview">
+                <div align="left">
+                    <h4>{{ evento.nome }}</h4>
+                </div>
+                {% version_object evento.logomarca.path 'banner' as banner %}
+                <div id="slideshow">
+                    <a href="{{ evento.get_absolute_url }}"><img src="{{ banner }}" alt="{{ evento.nome }}" width="{{ banner.width }}" height="{{ banner.height }}" /></a>
+                </div>
+                <a href="#" class="arrow_left">Anterior</a><a href="#" class="arrow_right">Próximo</a>
+                <div align="left">
+                    <h4>Descrição</h4>
+                    <p>{{ evento.descricao }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="shadow_large"></div>
+{% endblock %}

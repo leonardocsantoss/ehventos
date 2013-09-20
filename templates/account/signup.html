@@ -1,0 +1,570 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load uni_form %}
+
+{% block extra_head %}
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+            jQuery("#termos").fancybox({
+                    'autoDimensions'	: true,
+                    'padding'		: 20,
+            });
+    });
+</script>
+{% endblock %}
+
+
+{% block head_title %}{% trans "Cadastro" %}{% endblock %}
+
+{% block content %}
+    
+    {% if user.is_authenticated %}
+        {% trans "Você está logado." %}
+    {% else %}
+        {% trans "Você já está registrado?" %} <a href="{% url acct_login %}">{% trans "Entrar" %}</a>!
+        
+        <form class="signup uniForm" id="signup_form" method="post" action="{% url acct_signup %}">{% csrf_token %}
+            <fieldset class="inlineLabels">
+                {{ form|as_uni_form }}
+                <div  class="form_blick">
+                    <input type="submit" value="{% trans "Registrar" %}" />
+                </div>
+            </fieldset>
+        </form>
+
+        Ao clicar em "Registrar", você está indicando que você leu e concorda com os <a id="termos" href="#termos_popup">Termos de Uso</a>.
+
+        <div style="display:none">
+            <div id="termos_popup" style="width: 800px; height: 300px">
+                <EM>Por este </EM><EM><STRONG>TERMO DE USO</STRONG></EM><EM>, o
+</EM><EM><STRONG>USUÁRIO do ehVentos</STRONG></EM><EM> fica ciente e
+concorda que ao utilizar o sistema do </EM><STRONG>ehVentos</STRONG><EM>,
+automaticamente aderirá e concordará em se submeter integralmente
+às condições do presente </EM><EM><STRONG>TERMO DE USO</STRONG></EM><EM>
+e qualquer de suas alterações futuras.</EM></P>
+
+<P>As palavras grafadas neste instrumento com letras maiúsculas
+terão o significado que a elas é atribuído de acordo com o
+estabelecido abaixo:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><A NAME="__DdeLink__0_562941402"></A>
+	<STRONG>USUÁRIO(S):</STRONG> são as pessoas físicas ou jurídicas
+	que acessam e usam os serviços providos pelo <STRONG>ehVentos</STRONG>.
+		</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG>SITE:</STRONG> conjunto de
+	páginas ou lugar no ambiente da Internet ocupado com <STRONG>CONTEÚDO</STRONG>
+
+	de uma empresa ou de uma pessoa.
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><A NAME="__DdeLink__0_562941403"></A><A NAME="__DdeLink__0_562941404"></A>
+	<STRONG>SITE ehVentos:</STRONG> é o <STRONG>SITE</STRONG> de
+	internet registrado no Núcleo de Informação e Coordenação do
+	Ponto BR (www.registro.br) sob o domínio <B>ehventos.e-tick</B><STRONG><B>.</B></STRONG><STRONG>com.br</STRONG>,
+	com todos os recursos e ferramentas relacionadas a este, bem como
+	outros <STRONG>SITES</STRONG> e domínios da marca <STRONG>ehVentos</STRONG>
+
+	registrados nos respectivos órgãos responsáveis pela
+	classificação e registro do domínio.
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><A NAME="__DdeLink__0_562941405"></A>
+	<STRONG><B>PROMOTER</B></STRONG><STRONG>(S):</STRONG> são as
+	pessoas físicas ou jurídicas que veiculam seus eventos no
+	<STRONG>ehVentos</STRONG>.
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG>COOKIE(S):</STRONG>
+	pequeno arquivo de texto armazenado nos navegadores. Este recurso
+	possibilita a identificação de <STRONG>USUÁRIOS</STRONG> e o
+	direcionamento de documentos de acordo com parâmetros
+	pré-estabelecidos.
+	</P>
+
+	<LI><P STYLE="margin-bottom: 0in"><STRONG>LINK(S):</STRONG>
+	significa um acesso eletrônico, seja por meio de imagens ou
+	palavras, que permite a conexão a outras telas de um mesmo <STRONG>SITE</STRONG>,
+	ou, ainda, de outros <STRONG>SITES</STRONG>.
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG>SPAM:</STRONG> são
+	e-mails enviados a um grupo de <STRONG>USUÁRIOS</STRONG> sem a sua
+	devida permissão.
+	</P>
+
+	<LI><P><STRONG>CONTEÚDO:</STRONG> inclui texto, programas, scripts,
+	gráficos, fotos, sons, imagens, músicas, vídeos, combinações
+	audiovisuais, animações, recursos interativos e outros materiais
+	que o(s) <STRONG>USUÁRIO(S)</STRONG> e o(s) <STRONG>PROMOTER(S)</STRONG>,
+	têm acesso ou submetem a um <STRONG>SITE</STRONG>.
+	</P>
+</UL>
+<P><A NAME="__DdeLink__0_562941406"></A>Este documento informa as
+responsabilidades, deveres e obrigações que todo <STRONG>USUÁRIO(S)</STRONG>
+assume ao acessar e/ou utilizar o <STRONG>SITE </STRONG><STRONG>ehVentos</STRONG>
+
+e seus serviços relacionados como softwares, complementos, plug-ins,
+barras e acessórios a não ser quando regido por um <STRONG>TERMO DE
+USO</STRONG> específico.</P>
+<P><A NAME="__DdeLink__0_562941407"></A><A NAME="__DdeLink__0_562941408"></A><A NAME="__DdeLink__0_562941409"></A>
+<STRONG>SITE</STRONG> As funcionalidades adicionais do <STRONG>ehVentos</STRONG>,
+possíveis graças à tecnologia eletrônica, não desvirtuam o fato
+de o <STRONG>SITE ehVentos</STRONG> adicionar em seu meio eletrônico
+informações de PROMOTERS pelas quais o <STRONG>SITE ehVentos</STRONG>,
+<EM><STRONG>NÃO</STRONG></EM> se responsabiliza (assim como anúncios
+classificados em jornais, rádio, ou televisão).</P>
+
+<P><A NAME="__DdeLink__0_5629414010"></A>Desse modo, o <STRONG>USUÁRIO(S)</STRONG>
+deve checar a veracidade das informações obtidas pelo meio
+eletrônico do <STRONG>SITE </STRONG><STRONG>ehVentos</STRONG> e
+tomar todas as medidas necessárias para se proteger de danos,
+fraudes ou estelionatos, inclusive <EM>&quot;on-line&quot;</EM> e
+<EM>&quot;off-line&quot;</EM>.</P>
+<P><A NAME="__DdeLink__0_5629414011"></A>O <STRONG>USUÁRIO(S)</STRONG>
+
+deve ler com atenção os termos abaixo antes de acessar ou usar o
+<STRONG>SITE </STRONG><STRONG>ehVentos</STRONG>, pois, o acesso ou
+uso deste implica em concordância integral com tais termos
+universais.</P>
+<P><A NAME="__DdeLink__0_5629414012"></A><A NAME="__DdeLink__0_5629414013"></A>
+O <STRONG>SITE ehVentos</STRONG> e os demais participantes do <STRONG>SITE</STRONG>
+somente fornecerão ao <STRONG>USUÁRIO(S)</STRONG> informações e
+serviços mediante expressa concordância aos <STRONG>TERMOS DE USO</STRONG>,
+condições e informações aqui contidas, assim como aos demais
+documentos incorporados ao mesmo por referência. O uso do <STRONG>SITE
+
+</STRONG><STRONG>ehVentos</STRONG> significa a total concordância
+com tais termos, condições e informações.</P>
+<P><A NAME="__DdeLink__23_56294140"></A><A NAME="__DdeLink__0_5629414014"></A><A NAME="__DdeLink__26_56294140"></A><A NAME="__DdeLink__20_56294140"></A>
+O <STRONG>ehVentos</STRONG> captura e divulga eventos advindos de
+diversos <B>PROMOTER</B><STRONG>(S)</STRONG>, logo, não atua como
+prestador de serviços de consultoria ou ainda intermediário ou
+participante em nenhum negócio jurídico entre o <STRONG>USUÁRIO(S)</STRONG>
+e o(s) <STRONG>PROMOTER(S)</STRONG>.</P>
+
+<P><A NAME="__DdeLink__32_56294140"></A><A NAME="__DdeLink__0_5629414015"></A><A NAME="__DdeLink__20_562941401"></A>
+O <STRONG>ehVentos</STRONG> oferece em seu <STRONG>SITE</STRONG> um
+mecanismo gestão de eventos e inscrições dos mesmos anunciados e
+oferecidos através da Internet, a fim de proporcionar aos <STRONG><B>PROMOTER</B></STRONG><STRONG>S,</STRONG>
+uma facilidade na gestão de eventos, e aos <STRONG>USUÁRIOS </STRONG><STRONG><SPAN STYLE="font-weight: normal">uma
+facilidade na inscrição dos mesmos</SPAN></STRONG>.</P>
+<P><A NAME="__DdeLink__38_56294140"></A><A NAME="__DdeLink__0_56294140151"></A><A NAME="__DdeLink__35_56294140"></A>
+
+Assim, o <STRONG>SITE ehVentos</STRONG> não assume qualquer
+responsabilidade que advenha das relações existentes entre o
+<STRONG>USUÁRIO(S)</STRONG> e o(s) <STRONG>PROMOTER(S)</STRONG>,
+sejam elas diretas ou indiretas, e/ou também;</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">Pelo CONTEÚDO e funcionamento dos
+	<STRONG>SITES</STRONG> das lojas <EM>&quot;on-line&quot;</EM>
+
+	<STRONG>PROMOTER</STRONG><STRONG>(S)</STRONG>;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Por negociações efetuadas entre
+	<STRONG>USUÁRIO(S)</STRONG> e <STRONG>PROMOTER</STRONG><STRONG>(S)</STRONG>;
+		</P>
+	<LI><P STYLE="margin-bottom: 0in">Pela entrega de produtos e
+	serviços <STRONG>PROMOTER</STRONG><STRONG>(S)</STRONG>, sendo tais
+	negociações por conta e risco do <STRONG>USUÁRIO(S)</STRONG>, que
+	deve cercar-se de todos os cuidados necessários;
+	</P>
+
+	<LI><P STYLE="margin-bottom: 0in"><A NAME="__DdeLink__44_56294140"></A><A NAME="__DdeLink__0_562941401511"></A>
+	Por danos e/ou prejuízos resultantes das negociações entre
+	<B>USUÁRIO</B> e <STRONG>PROMOTER(S)</STRONG> cadastrados no <STRONG>SITE
+	</STRONG><STRONG>ehVentos</STRONG>;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><A NAME="__DdeLink__42_56294140"></A><A NAME="__DdeLink__0_562941401512"></A>
+	Pela origem, qualidade e quantidade dos produtos e serviços do
+	<STRONG>PROMOTER(S)</STRONG> cadastrados no <STRONG>SITE ehVentos</STRONG>,
+	sendo delas total e exclusiva responsabilidade;
+	</P>
+
+	<LI><P>Por transações efetuadas <EM>&quot;on-line&quot;</EM> na
+	Internet, que são de inteira e exclusiva responsabilidade de quem
+	disponibilizar os respectivos produtos ou serviços.
+	</P>
+</OL>
+<P>Portanto, o <STRONG>SITE ehVentos</STRONG> não é responsável
+por qualquer ação ou omissão do <STRONG>USUÁRIO(S)</STRONG>
+baseadas nas informações, anúncios, vídeos, fotos ou outros
+materiais veiculados pelo <STRONG>ehVentos</STRONG>. Adicionalmente,
+o <STRONG>SITE ehVentos</STRONG> envidará seus melhores esforços
+para manter o <B>SITE</B> sempre atualizado, completo e preciso, mas
+não se responsabilizará por erro, fraude, inexatidão, imprecisão
+ou divergência nos dados, vídeos, fotos ou outros materiais
+relacionados a anúncios ou à inexatidão das informações contidas
+e apresentadas no <STRONG>SITE ehVentos</STRONG>.</P>
+
+<P>Eventuais erros no funcionamento do <STRONG>SITE ehVentos</STRONG>
+serão corrigidos durante o período que for necessário para
+manutenção. O <STRONG>SITE ehVentos</STRONG> não se responsabiliza
+por danos decorrentes da não disponibilidade ou erro de
+funcionamento do <STRONG>SITE ehVentos</STRONG>.</P>
+<P>O <STRONG>SITE ehVentos</STRONG>, seus funcionários, agentes,
+colaboradores, representantes e procuradores, devem ser eximidos de
+toda e qualquer responsabilidade decorrente de qualquer tipo de
+reclamação ou ação legal contra um ou mais <STRONG>PROMOTER(S)</STRONG>,
+sejam elas promovidas por um ou mais <STRONG>USUÁRIO(S)</STRONG>, ou
+inclusive por algum terceiro.</P>
+
+<P>Também não serão de responsabilidade do <STRONG>SITE ehVentos</STRONG>
+as obrigações tributária que recaiam nas atividades entre
+<STRONG>USUÁRIO(S)</STRONG> e <STRONG>PROMOTER(S)</STRONG> no <STRONG>SITE
+ehVentos</STRONG>. Assim, ao adquirir algum bem ou serviço, o
+<STRONG>USUÁRIO(S)</STRONG> consumidor deverá exigir documento
+fiscal do <STRONG>PROMOTER(S)</STRONG>, a menos que este esteja
+legalmente dispensado de fornecê-la.</P>
+
+<P>O <STRONG>USUÁRIO(S)</STRONG> através deste <STRONG>TERMO DE USO</STRONG>
+aceita ser identificado pelo sistema do <STRONG>SITE ehVentos</STRONG>,
+como, por exemplo, no uso de <B>COOKIES</B> e/ou de outras
+tecnologias. Tal política visa à melhoria contínua dos serviços
+prestados pelo <STRONG>SITE ehVentos</STRONG>.</P>
+<P>Caso o <STRONG>USUÁRIO(S)</STRONG> acesse o <STRONG>SITE</STRONG>
+
+de parceiros, patrocinadores, <STRONG>PROMOTER(S)</STRONG> e demais
+<STRONG>SITES</STRONG> ou serviços que sejam acessados através do
+<STRONG>SITE ehVentos</STRONG>, é possível que haja solicitação
+de informações financeiras e/ou pessoais do consumidor <STRONG>USUÁRIO(S)</STRONG>.
+Tais informações não serão enviadas pelo <STRONG>USUÁRIO(S)</STRONG>
+ao <STRONG>SITE ehVentos</STRONG>, e sim diretamente ao solicitante,
+não tendo o <STRONG>SITE ehVentos</STRONG>, portanto, qualquer
+responsabilidade pela utilização e manejo dessa informação.</P>
+
+<P>O <STRONG>SITE ehVentos</STRONG> envidará seus melhores esforços
+para evitar o envio não solicitado de e-mails. Para tanto, resta
+estabelecido que seja absolutamente proibida à utilização do <STRONG>SITE
+ehVentos</STRONG> para a distribuição de <B>SPAM</B> ou o envio
+indiscriminado de mensagens de qualquer natureza via correio
+eletrônico.</P>
+<P>Fica a critério exclusivo do <STRONG>SITE ehVentos</STRONG>
+suspender e/ou inabilitar definitivamente e aplicar as medidas
+jurídicas cabíveis aos <STRONG>USUÁRIO(S)</STRONG> que se
+utilizarem do <STRONG>SITE ehVentos</STRONG> com a finalidade de
+promover seus produtos ou serviços à venda ou com qualquer outro
+fim, e que forem denunciados pelas pessoas que receberam essas
+mensagens <B>SPAM</B>.</P>
+
+<P>Para a obtenção de informações sobre um anúncio, o <STRONG>USUÁRIO(S)</STRONG>
+do <STRONG>SITE ehVentos</STRONG> não terá que desembolsar qualquer
+taxa para o(s) <STRONG>PROMOTER(S)</STRONG>, a que título seja.
+Qualquer infração nesse sentido por parte do <STRONG>PROMOTER(S)</STRONG>
+deve ser imediatamente notificada ao <STRONG>SITE ehVentos</STRONG>.</P>
+<P>Os materiais do <STRONG>SITE ehVentos</STRONG> poderão ser
+acessados, utilizados e impressos para o uso pessoal e não comercial
+do <STRONG>USUÁRIO(S)</STRONG>, logo, o <STRONG>USUÁRIO(S)</STRONG>
+
+não poderá copiar, modificar, criar trabalho derivado, transferir
+ou vender qualquer informação, &quot;software&quot;, lista de
+<STRONG>USUÁRIO(S)</STRONG> e outras listas, produtos ou serviços
+obtidos no <STRONG>SITE ehVentos</STRONG> para uso comercial.</P>
+<P>Além disso, o <STRONG>USUÁRIO(S)</STRONG> não poderá:</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">Transmitir ou enviar informações
+	de qualquer natureza que possam incitar induzir, ou promover
+	atitudes discriminatórias, mensagens violentas ou delituosas que
+	atentem contra aos bons costumes, à moral ou ainda que contrariem a
+	ordem pública;
+	</P>
+
+	<LI><P STYLE="margin-bottom: 0in">Cadastrar-se com informações de
+	propriedade de terceiros ou falsas;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Utilizar os produtos e/ou serviços
+	disponíveis no <STRONG>SITE ehVentos</STRONG> para fins diversos
+	daqueles a que se destinam;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Alterar, apagar e/ou corromper
+	dados e informações de terceiros;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Violar a privacidade de quaisquer
+	<STRONG>USUÁRIO(S)</STRONG> e/ou <STRONG>PROMOTER(S)</STRONG>;
+	</P>
+
+	<LI><P STYLE="margin-bottom: 0in">Violar propriedade intelectual do
+	<STRONG>SITE ehVentos</STRONG>, de terceiros em geral, ou seja,
+	direito autoral, marca, patente, etc., através de reprodução de
+	material, sem a prévia autorização do proprietário;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Usar &quot;nome de <STRONG>USUÁRIO</STRONG>&quot;
+	que guarde semelhança com o nome <STRONG>&quot;ehVentos&quot;</STRONG>;
+		</P>
+	<LI><P STYLE="margin-bottom: 0in">Transmitir ou enviar arquivos com
+	vírus de computador, com <STRONG>CONTEÚDO</STRONG> invasivo,
+	destrutivo ou que cause dano temporário ou permanente nos
+	equipamentos do destinatário e/ou do <STRONG>SITE ehVentos</STRONG>;
+		</P>
+
+	<LI><P STYLE="margin-bottom: 0in">Utilizar nomes e/ou apelidos
+	considerados ofensivos, bem como os que contenham dados pessoais de
+	qualquer <STRONG>USUÁRIO(S)</STRONG> e/ou <STRONG>PROMOTER(S)</STRONG>.
+		</P>
+	<LI><P STYLE="margin-bottom: 0in">Transmitir ou enviar informações
+	de propriedade de terceiros;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Usar endereços de computadores,
+	de rede ou de correio eletrônico falso;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Utilizar qualquer nome e/ou
+	apelido que insinue ou sugira que os produtos ou serviços
+	anunciados pertencem ao <STRONG>SITE ehVentos</STRONG> ou que fazem
+	parte de promoções suas;
+	</P>
+
+	<LI><P STYLE="margin-bottom: 0in">Utilizar materiais que contenham
+	qualquer vírus, worms, malware e outros programas de computador que
+	possa causar danos ao site ou ao <STRONG>USUÁRIO(S)</STRONG> ou
+	<STRONG>PROMOTER(S)</STRONG> do <STRONG>SITE ehVentos</STRONG>; e,
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Realizar a divulgação de
+	materiais ilegais, agressivos, caluniosos, abusivos, difamatórios,
+	discriminatórios, ameaçadores, danosos, invasivos da privacidade
+	de terceiros, terroristas, vulgares, obscenos ou ainda condenáveis
+	de qualquer tipo ou natureza que sejam prejudiciais a menores e à
+	preservação do meio ambiente de algum modo.
+	</P>
+	<LI><P>Anexar URLs, endereços de e-mail ou outro material
+	publicitário ou de cunho de anúncio e/ou publicidade de terceiros
+	sem prévia autorização do <STRONG>SITE ehVentos</STRONG>.
+	</P>
+
+</OL>
+<P>O descumprimento às condições, termos e observações deste
+<STRONG>TERMO DE USO</STRONG> dá ao <STRONG>SITE ehVentos</STRONG> o
+direito de cancelar, suspender, excluir e/ou desativar o cadastro ou
+o material enviado pelo <STRONG>USUÁRIO(S)</STRONG>, temporária ou
+definitivamente, ao seu único e exclusivo critério, sem prejuízo
+das cominações legais pertinentes e sem a necessidade de comunicar
+ao <STRONG>USUÁRIO(S)</STRONG> a ação tomada dentro do seu
+sistema.</P>
+<P>Todos os materiais do <STRONG>SITE ehVentos</STRONG>, incluindo,
+mas não se limitando a apresentação, &quot;layout&quot;, marcas,
+logotipos, sistemas, produtos, denominações de serviços e
+quaisquer outros materiais, inclusive bases de dados, programas,
+arquivos, imagens, vídeos ou materiais de qualquer outra natureza e
+que tenham contratualmente autorizadas suas veiculações no <STRONG>SITE
+ehVentos</STRONG> são protegidas pela legislação de Propriedade
+Intelectual.</P>
+
+<P>São de titularidade do <STRONG>SITE ehVentos</STRONG> e de suas
+afiliadas, clientes ou fornecedores os direitos de uso e propriedade
+delimitando que sua reprodução, transmissão e distribuição de
+tais materiais, não são permitidas sem o expresso consentimento por
+escrito do <STRONG>SITE ehVentos</STRONG> ou do respectivo titular,
+sobretudo para o fim econômico ou comercial.</P>
+<P>Caracterizará como infração da legislação vigente, o uso
+indevido de materiais protegidos por propriedade intelectual (direito
+autoral, marcas comerciais, patentes etc.) apresentados no <STRONG>SITE
+ehVentos</STRONG>, sujeitando-se o <STRONG>USUÁRIO(S)</STRONG>
+infrator às medidas judiciais cabíveis à espécie, sem prejuízo
+de eventual indenização por perdas e danos e honorários
+advocatícios ao <STRONG>SITE ehVentos</STRONG>, bem como a terceiros
+que venham a sofrer pelo ato do <STRONG>USUÁRIO(S)</STRONG>.</P>
+
+<P>Os riscos derivados da utilização do <STRONG>SITE ehVentos</STRONG>
+são do <STRONG>USUÁRIO(S)</STRONG>, logo, se seu uso resultar na
+necessidade de serviços e/ou reposição de material, equipamento,
+propriedade ou informação do <STRONG>USUÁRIO(S)</STRONG> o <STRONG>SITE
+ehVentos</STRONG> e suas afiliadas não serão responsáveis por tais
+custos.</P>
+<P>Os produtos, informações, valores, serviços sistemas e/ou
+&quot;software&quot;, publicados no <STRONG>SITE ehVentos</STRONG>
+
+podem conter imprecisões e/ou erros de grafia, razão pela qual o
+<STRONG>ehVentos</STRONG> envidará seus melhores esforços para
+manter o <STRONG>SITE</STRONG> atualizado periodicamente.</P>
+<P>De nenhum modo o <STRONG>ehVentos</STRONG> será responsabilizado
+por qualquer dano direto, indireto, especial, incidental ou de
+qualquer fato resultante do uso do <STRONG>ehVentos</STRONG>,
+inclusive por quaisquer informações, produtos e/ou serviços
+obtidos através dele ou em decorrência do seu uso.</P>
+<P>O <STRONG>ehVentos</STRONG> contém <STRONG>LINKS</STRONG> para
+outros <STRONG>SITES</STRONG> operados por terceiros que não o
+
+<STRONG>ehVentos</STRONG> e/ou suas afiliadas. Esses <STRONG>LINKS</STRONG>
+são fornecidos somente para sua referência, razão pela qual, o
+<STRONG>ehVentos</STRONG> não tem controle sobre esses outros <STRONG>SITES</STRONG>
+e não se responsabiliza pelo <STRONG>CONTEÚDO</STRONG> dos mesmos,
+sendo que a inclusão desses <STRONG>LINKS</STRONG> no <STRONG>ehVentos</STRONG>
+
+não implica na aprovação do material ou qualquer associação com
+seus proprietários. Assim, ao acessar e usar esses <STRONG>SITES</STRONG>,
+suas informações, materiais, produtos e/ou serviços, o <STRONG>USUÁRIO(S)</STRONG>
+estará fazendo por sua conta e risco.</P>
+<P>O mesmo se aplica aos <STRONG>SITES</STRONG> que possuam <STRONG>LINKS</STRONG>
+para o <STRONG>ehVentos</STRONG>, eis que o <STRONG>ehVentos</STRONG>
+
+não possui controle sobre os mesmos.</P>
+<P>Desse modo, ao ser encaminhado para outro <STRONG>SITE</STRONG>, o
+<STRONG>USUÁRIO(S)</STRONG> estará sujeito às políticas deste
+<STRONG>SITE</STRONG>, sobre o qual o <STRONG>ehVentos</STRONG> não
+tem qualquer relação.</P>
+<P>O <STRONG>ehVentos</STRONG>, suas afiliadas e seus fornecedores
+poderão fazer mudanças nos serviços, produtos, informações e
+quaisquer outros materiais do <STRONG>ehVentos</STRONG>, inclusive
+encerrar suas atividades a qualquer momento sem a necessidade de
+enviar qualquer notificação prévia ao <STRONG>USUÁRIO(S)</STRONG>
+
+e sem o direito de indenização a qualquer <STRONG>USUÁRIO(S)</STRONG>
+ou <STRONG>PROMOTER(S)</STRONG>.</P>
+<P>O <B>ehVentos</B> poderá alterar, modificar e/ou ajustar este
+<STRONG>TERMO DE USO</STRONG> a qualquer tempo, sendo que essas
+alterações, modificações e/ou ajustes terão efeito somente após
+se tornarem públicos. Desse modo, o <STRONG>USUÁRIO(S)</STRONG>
+obriga-se a rever o <STRONG>TERMO DE USO</STRONG> do <B>ehVentos</B>
+
+de tempos em tempos, restando claro que o <STRONG>USUÁRIO(S)</STRONG>
+subordina-se à aceitação do <STRONG>TERMO DE USO</STRONG> vigente
+no momento de seu acesso ou faz uso dos serviços prestados pelo
+<STRONG>ehVentos</STRONG>.</P>
+<P>O <STRONG>USUÁRIO(S)</STRONG> e/ou <STRONG>PROMOTER(S)</STRONG>
+indenizará o <STRONG>ehVentos</STRONG>, suas filiais, empresas
+controladas, controladoras, colaboradores, representantes,
+administradores e empregados por qualquer ação promovida por outros
+
+<STRONG>USUÁRIO(S)</STRONG>, <STRONG>PROMOTER(S)</STRONG> ou
+terceiros decorrentes de atividades ilegais no <STRONG>ehVentos</STRONG>
+em razão do descumprimento do <STRONG>TERMO DE USO</STRONG> e/ou
+demais políticas do <STRONG>ehVentos</STRONG>; ou ainda pela
+violação de qualquer lei, direito de terceiros,
+responsabilizando-se por eventuais perdas e danos, além de
+honorários advocatícios.</P>
+<P>O <STRONG>USUÁRIO(S)</STRONG> e o(s) <STRONG>PROMOTER(S)</STRONG>
+
+detêm de todos os direitos de propriedade sobre a informação,
+texto, gráfico ou outros materiais que publicar no <STRONG>ehVentos</STRONG>,
+no entanto, o <STRONG>SITE</STRONG> pode reproduzir publicar e
+distribuir todos os arquivos, textos, gráficos integral ou em partes
+do seu <STRONG>CONTEÚDO</STRONG> <EM>&quot;on-line&quot;</EM> e
+<EM>&quot;off-line&quot;</EM>.</P>
+<P>O <STRONG>USUÁRIO(S)</STRONG> e o(s) <STRONG>PROMOTER(S)</STRONG>
+
+podem editar ou remover o <STRONG>CONTEÚDO</STRONG> do <STRONG>ehVentos</STRONG>
+a qualquer momento, todavia, se o <STRONG>ehVentos</STRONG> tiver
+realizado a distribuição do <STRONG>CONTEÚDO</STRONG> do
+<STRONG>USUÁRIO(S)</STRONG> e o(s) <STRONG>PROMOTER(S)</STRONG> para
+outros, não se compromete a fazer a alteração do que tiver
+distribuído.</P>
+
+<P>Este <STRONG>TERMO DE USO</STRONG> se aplica a todos os
+<STRONG>PROMOTER(S)</STRONG> do <STRONG>ehVentos</STRONG>, inclusive
+os <STRONG>USUÁRIO(S)</STRONG> que também contribuem com <STRONG>CONTEÚDO</STRONG>
+do <STRONG>ehVentos</STRONG>.</P>
+
+<P>Ao contribuir/submeter qualquer <STRONG>CONTEÚDO</STRONG> no <STRONG>SITE
+ehVentos</STRONG>, o(s) <STRONG>USUÁRIO(S)</STRONG> e o(s)
+<STRONG>PROMOTER(S)</STRONG>, garantem que possuem as licenças
+necessárias, direitos, autorizações e permissões para publicar o
+<STRONG>CONTEÚDO</STRONG> enviado ao <STRONG>ehVentos</STRONG>. O
+<STRONG>USUÁRIO(S) </STRONG>e <STRONG>PROMOTER(S)</STRONG> concedem
+ao <STRONG>ehVentos</STRONG> uma licença mundial, perpétua,
+irrevogável, livre de royalties, transferível, bem como e inclusive
+o direito de licença para usar, copiar, modificar, apagar na sua
+totalidade, adaptar, publicar, traduzir, criar trabalhos derivados,
+vender, distribuir materiais e/ou incorporar esses materiais em
+qualquer formato, meio ou tecnologia sem qualquer prejuízo ao
+
+<STRONG>USUÁRIO(S)</STRONG> e o(s) <STRONG>PROMOTER(S)</STRONG>.</P>
+<P>Desta forma, nenhum dos materiais deve ser sujeito/submetido a
+qualquer obrigação de confiança por parte do <STRONG>ehVentos</STRONG>,
+seus funcionários, agentes, colaboradores e representantes sem os
+direitos ou licenças disponíveis para isso.</P>
+<P>O <STRONG>SITE ehVentos</STRONG> reserva-se ao direito de alterar,
+condensar ou excluir qualquer <STRONG>CONTEÚDO</STRONG> do <STRONG>SITE
+ehVentos</STRONG> que considere, a seu exclusivo critério, violar as
+diretrizes de <STRONG>CONTEÚDO</STRONG>, a legislação brasileira
+ou de qualquer outra disposição do presente <STRONG>TERMO DE USO</STRONG>.</P>
+
+<P>O <STRONG>USUÁRIO(S)</STRONG> pode enviar vídeos e comentários,
+todavia, o <STRONG>ehVentos</STRONG> não garante a confidencialidade
+em relação a qualquer <STRONG>CONTEÚDO</STRONG> enviado, sendo
+importante mencionar que o <STRONG>USUÁRIO(S)</STRONG> é o único
+responsável por seu <STRONG>CONTEÚDO</STRONG> e pelas conseqüências
+de enviá-lo ou publicá-lo, garantindo que possui ou tem as licenças
+necessárias, direitos, autorizações e permissões para publicá-lo.</P>
+
+<P>O <STRONG>USUÁRIO(S)</STRONG> autoriza o <STRONG>ehVentos</STRONG>
+a usar todas as patentes, marcas registradas, segredos de negócio,
+direitos autorais ou outros direitos de propriedade e tais <STRONG>CONTEÚDOS</STRONG>
+para a publicação de acordo com este <STRONG>TERMO DE USO</STRONG>.
+Assim, cumpre esclarecer que o <STRONG>USUÁRIO(S)</STRONG> mantém
+todos os direitos de propriedade sobre seu <STRONG>CONTEÚDO</STRONG>,
+entretanto, ao enviar o <STRONG>CONTEÚD</STRONG>O ao <STRONG>ehVentos</STRONG>,
+o <STRONG>USUÁRIO(S)</STRONG> pelo presente, cede ao <STRONG>ehVentos</STRONG>
+
+licença mundial, não exclusiva, isenta de royalties, passível de
+ser sublicenciada e transferida, para usar, reproduzir, distribuir,
+preparar trabalhos derivados, exibir e executar o <STRONG>CONTEÚDO</STRONG>
+em conexão com o <STRONG>ehVentos</STRONG> (e de seus sucessores e
+afiliados), inclusive, mas sem se limitar a atividades de promoção
+e redistribuição parcial ou total do Serviço (e trabalhos
+derivados) em qualquer formato de mídia e através de qualquer canal
+de mídia.</P>
+<P>O <STRONG>USUÁRIO(S)</STRONG> também cede a todos os <STRONG>USUÁRIO(S)</STRONG>
+do <STRONG>ehVentos</STRONG> uma licença não-exclusiva para acessar
+o seu <STRONG>CONTEÚDO</STRONG> por meio do <STRONG>ehVentos</STRONG>
+
+(e de seus sucessores e afiliados), e para usar, reproduzir,
+distribuir, exibir e executar tal <STRONG>CONTEÚDO</STRONG> conforme
+permitido pela funcionalidade do <STRONG>SITE ehVentos</STRONG> e de
+acordo com o <STRONG>TERMO DE USO</STRONG>. As licenças acima
+cedidas pelo <STRONG>USUÁRIO(S)</STRONG> para o <STRONG>SITE
+ehVentos</STRONG>, irão encerrar dentro de um tempo comercialmente
+razoável após a remoção ou exclusão pelo <STRONG>USUÁRIO(S)</STRONG>.
+As licenças acima, cedidas pelo <STRONG>USUÁRIO(S)</STRONG> em
+relação aos comentários são permanentes e irrevogáveis.</P>
+
+<P>O <STRONG>USUÁRIO(S)</STRONG> afirma que não enviará material
+protegido por direitos autorais, por segredo de negócio ou de
+qualquer outra forma protegido por direitos de terceiros, a menos que
+tenha permissão do legítimo proprietário do material ou caso
+esteja legalmente autorizado a publicar o material e ceder ao <STRONG>SITE</STRONG>
+do <STRONG>ehVentos</STRONG> todos os direitos de licença aqui
+concedidos.</P>
+<P>O <STRONG>ehVentos</STRONG> não endossa qualquer <STRONG>CONTEÚDO</STRONG>
+
+enviado por qualquer <STRONG>USUÁRIO(S)</STRONG> ou licenciante ou
+qualquer opinião, recomendação ou conselho ali expresso. O
+<STRONG>ehVentos</STRONG> renuncia expressamente toda e qualquer
+responsabilidade ligada ao <STRONG>CONTEÚDO</STRONG>.</P>
+<P>O <STRONG>ehVentos</STRONG> não permite atividades que violem os
+direitos autorais, nem os direitos de propriedade intelectual em seu
+<STRONG>SITE</STRONG>, assim, o <STRONG>SITE</STRONG> do <STRONG>ehVentos</STRONG>
+
+removerá todo o <STRONG>CONTEÚDO</STRONG> quando devidamente
+notificado de que tal <STRONG>CONTEÚDO</STRONG> infringe o direito
+de propriedade intelectual de qualquer outra pessoa. O <STRONG>SITE
+ehVentos</STRONG> se reserva no direito de remover o <STRONG>CONTEÚDO</STRONG>
+sem prévio aviso.</P>
+<P>Quaisquer avisos ou comunicações, que uma das partes tenha de
+fazer a outra parte, em relação a quaisquer direitos ou obrigações
+contidas no presente instrumento, deverão adotar a forma escrita e
+serão tidas como eficazmente entregues no endereço constante do
+preâmbulo deste termo, se:</P>
+<OL>
+
+	<LI><P STYLE="margin-bottom: 0in">Entregues em mãos mediante
+	protocolo escrito por quem de direito possa representar a parte
+	remetida;
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Enviadas por serviço de <EM>&quot;courier&quot;</EM>
+	mediante protocolo escrito ou se pelo correio, na forma de carta
+	registrada (&quot;AR&quot;); ou
+	</P>
+	<LI><P>Enviadas por e-mail, ou outro meio eletrônico hábil para
+	tais comunicações.
+	</P>
+</OL>
+<P>As partes convencionam o recebimento de mensagens e arquivos
+eletrônicos como prova documental para todos os efeitos, desde que
+com aviso de confirmação de recebimento ou outro tipo de protocolo
+que certifique o recebimento da comunicação.</P>
+
+            </div>
+        </div>
+    
+        
+    {% endif %}
+{% endblock %}
+
+{% block extra_body %}
+   
+{% endblock %}
