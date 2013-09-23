@@ -10,6 +10,7 @@ videos
 nbproject
 settings/local.py
 settings/development.py
+settings_production.py
 
 *.py[cod]
 

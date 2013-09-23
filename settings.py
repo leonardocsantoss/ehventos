@@ -16,13 +16,13 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-                'ENGINE': 'mysql',
-                'NAME': 'ehv',          #etick_3
-                'USER': 'root',         #etick_3
-                'PASSWORD': 'ml041206', #etick0ehv
-                'HOST': '',             #dbmy0051.whservidor.com
-                'PORT': '',
-            },
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'db.sqlite',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
 }
 
 
@@ -91,7 +91,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.csrf.CsrfResponseMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-    #'utils.middleware.NoCache',
 )
 
 ROOT_URLCONF = 'urls'
@@ -135,6 +134,7 @@ EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
 CONTACT_EMAIL = "leonardocsantoss@gmail.com"
 LOGIN_URL = "/usuario/entrar/"
+LOGIN_REDIRECT_URL = "/admin/"
 
 
 #Fechar a secao quando o browser fechar

@@ -258,7 +258,7 @@ label{ float:left; width:258px; font-size:14px; color:#404040; text-align:right;
 
 /* footer */
 #footer{ width:100%; font-size:13px; color:#efefef; background:#144e7b url(../images/footer_bg.gif) top repeat-x;}
-.footer_inside{ width:970px; margin:0 auto; padding:64px 0; overflow:hidden; background:url(../images/foot_logo.png) 45% 80% no-repeat;}
+.footer_inside{ width:970px; margin:0 auto; padding:64px 0; overflow:hidden;}
 .footer_inside a{
     text-decoration: none;
 }

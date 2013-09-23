@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^$', index, name="index"),
     # Uncomment the next line to enable the admin:
     (r'^admin/filebrowser/', include('filebrowser.urls')),
-    (r'^admin/(.*)', admin.site.root),
+    url(r'^admin/', include(admin.site.urls)),
     (r'^grappelli/', include('grappelli.urls')),
     (r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
     (r'^', include('ehv.urls')),
