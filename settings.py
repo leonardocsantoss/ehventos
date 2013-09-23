@@ -1,8 +1,11 @@
 # Django settings for base project.
 # -*- coding:utf-8 -*-
 
-import os
+import os, sys
 PROJECT_ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+sys.path.insert(0, os.path.join(PROJECT_ROOT_PATH, "lib"))
+sys.path.insert(0, os.path.join(PROJECT_ROOT_PATH, "src"))
 
 LOCAL = True
 DEBUG = True
