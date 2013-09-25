@@ -100,7 +100,7 @@ class SignupForm(forms.Form):
 
         if promoter:
             new_user.is_staff = True
-            new_user.groups.add(Group.objects.get(name__icontains=u'promoter'))
+            new_user.groups.add(Group.objects.get_or_create(name=u'Promoter')[0])
         new_user.first_name = nome
         new_user.last_name = sobrenome
         new_user.save()
